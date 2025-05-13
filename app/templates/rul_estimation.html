@@ -1,0 +1,89 @@
+{% extends "layout.html" %} {% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h3>
+          <i class="fas fa-clock"></i> Remaining Useful Life (RUL) Estimation
+        </h3>
+      </div>
+      <div class="card-body">
+        <p class="lead">
+          Estimate the remaining useful life of equipment components using
+          Gradient Boosting algorithm.
+        </p>
+
+        {% if not has_results %}
+        <div class="text-center py-4">
+          <p>Click the button below to run the RUL estimation analysis.</p>
+          <form action="{{ url_for('rul_estimation') }}" method="post">
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="fas fa-play-circle"></i> Run RUL Estimation
+            </button>
+          </form>
+        </div>
+        {% else %}
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h5>RUL Distribution</h5>
+              </div>
+              <div class="card-body text-center">
+                <img
+                  src="{{ url_for('static', filename='images/rul_dist.png') }}"
+                  class="img-fluid"
+                  alt="RUL Distribution"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h5>RUL Analysis</h5>
+              </div>
+              <div class="card-body">
+                <p>
+                  The graph shows the distribution of estimated remaining useful
+                  life for your equipment.
+                </p>
+                <ul>
+                  <li>
+                    <strong>Low RUL values</strong> indicate components near
+                    their end of life.
+                  </li>
+                  <li>
+                    <strong>High RUL values</strong> indicate components with
+                    longer expected lifespans.
+                  </li>
+                </ul>
+                <div class="mt-4">
+                  <h5>Next Steps</h5>
+                  <a
+                    href="{{ url_for('cost_optimization') }}"
+                    class="btn btn-success"
+                  >
+                    <i class="fas fa-dollar-sign"></i> Optimize Maintenance
+                    Costs
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h5>RUL Estimation Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">{{ results|safe }}</div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

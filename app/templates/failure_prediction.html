@@ -1,0 +1,82 @@
+{% extends "layout.html" %} {% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header bg-danger text-white">
+        <h3><i class="fas fa-exclamation-triangle"></i> Failure Prediction</h3>
+      </div>
+      <div class="card-body">
+        <p class="lead">
+          Predict equipment failures before they happen using Random Forest
+          algorithm.
+        </p>
+
+        {% if not has_results %}
+        <div class="text-center py-4">
+          <p>Click the button below to run the failure prediction analysis.</p>
+          <form action="{{ url_for('failure_prediction') }}" method="post">
+            <button type="submit" class="btn btn-danger btn-lg">
+              <i class="fas fa-play-circle"></i> Run Failure Prediction
+            </button>
+          </form>
+        </div>
+        {% else %}
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h5>Failure Probability Distribution</h5>
+              </div>
+              <div class="card-body text-center">
+                <img
+                  src="{{ url_for('static', filename='images/failure_prob_dist.png') }}"
+                  class="img-fluid"
+                  alt="Failure Probability Distribution"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h5>Risk Analysis</h5>
+              </div>
+              <div class="card-body">
+                <div class="alert alert-danger">
+                  <h4>
+                    <i class="fas fa-exclamation-circle"></i> High Risk
+                    Equipment
+                  </h4>
+                  <p class="mb-0">
+                    {{ high_risk_count }} equipment units are at high risk of
+                    failure (>70% probability)
+                  </p>
+                </div>
+                <div class="mt-4">
+                  <h5>Next Steps</h5>
+                  <a
+                    href="{{ url_for('rul_estimation') }}"
+                    class="btn btn-primary"
+                  >
+                    <i class="fas fa-clock"></i> Estimate Remaining Useful Life
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h5>Prediction Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">{{ results|safe }}</div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

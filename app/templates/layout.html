@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Predictive Maintenance Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        padding-top: 70px;
+      }
+      .sidebar {
+        background-color: #343a40;
+        color: white;
+        min-height: calc(100vh - 70px);
+        padding: 20px 0;
+      }
+      .sidebar .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 0.75rem 1.25rem;
+      }
+      .sidebar .nav-link:hover {
+        color: white;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      .sidebar .nav-link.active {
+        color: white;
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      .sidebar .nav-link i {
+        margin-right: 10px;
+      }
+      .content {
+        padding: 20px;
+      }
+      .card {
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: none;
+      }
+      .card-header {
+        font-weight: bold;
+        background-color: #f8f9fa;
+      }
+      .alert {
+        margin-bottom: 20px;
+      }
+      .dashboard-card {
+        transition: transform 0.3s;
+      }
+      .dashboard-card:hover {
+        transform: translateY(-5px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+          <i class="fas fa-cogs"></i> Predictive Maintenance
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('index') }}">
+                <i class="fas fa-home"></i> Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('upload_file') }}">
+                <i class="fas fa-upload"></i> Upload Data
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-2 sidebar">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == url_for('index') %}active{% endif %}"
+                href="{{ url_for('index') }}"
+              >
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == url_for('upload_file') %}active{% endif %}"
+                href="{{ url_for('upload_file') }}"
+              >
+                <i class="fas fa-upload"></i> Upload Data
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == url_for('data_preview') %}active{% endif %}"
+                href="{{ url_for('data_preview') }}"
+              >
+                <i class="fas fa-table"></i> Data Preview
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == url_for('failure_prediction') %}active{% endif %}"
+                href="{{ url_for('failure_prediction') }}"
+              >
+                <i class="fas fa-exclamation-triangle"></i> Failure Prediction
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == url_for('rul_estimation') %}active{% endif %}"
+                href="{{ url_for('rul_estimation') }}"
+              >
+                <i class="fas fa-clock"></i> RUL Estimation
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if request.path == url_for('cost_optimization') %}active{% endif %}"
+                href="{{ url_for('cost_optimization') }}"
+              >
+                <i class="fas fa-dollar-sign"></i> Cost Optimization
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 content">
+          <!-- Flash messages -->
+          {% with messages = get_flashed_messages(with_categories=true) %} {% if
+          messages %} {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show">
+            {{ message }}
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+            ></button>
+          </div>
+          {% endfor %} {% endif %} {% endwith %}
+
+          <!-- Main content block -->
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Additional JavaScript -->
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

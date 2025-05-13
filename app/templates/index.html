@@ -1,0 +1,144 @@
+{% extends "layout.html" %} {% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h2>
+          <i class="fas fa-tachometer-alt"></i> Predictive Maintenance Dashboard
+        </h2>
+      </div>
+      <div class="card-body">
+        <p class="lead">
+          Welcome to the Predictive Maintenance Dashboard. This platform helps
+          you optimize equipment maintenance using machine learning techniques.
+        </p>
+
+        {% if not models_loaded %}
+        <div class="alert alert-warning">
+          <i class="fas fa-exclamation-circle"></i>
+          Models not found. The system will train new models when you upload and
+          analyze data.
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="card dashboard-card">
+      <div class="card-body text-center">
+        <h1><i class="fas fa-exclamation-triangle text-danger"></i></h1>
+        <h5 class="card-title">Failure Prediction</h5>
+        <p class="card-text">
+          Predict equipment failures before they happen using machine learning.
+        </p>
+        <a
+          href="{{ url_for('failure_prediction') }}"
+          class="btn btn-outline-danger"
+        >
+          <i class="fas fa-exclamation-triangle"></i> Predict Failures
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card dashboard-card">
+      <div class="card-body text-center">
+        <h1><i class="fas fa-clock text-primary"></i></h1>
+        <h5 class="card-title">Remaining Useful Life</h5>
+        <p class="card-text">
+          Estimate the remaining useful life of components in your equipment.
+        </p>
+        <a
+          href="{{ url_for('rul_estimation') }}"
+          class="btn btn-outline-primary"
+        >
+          <i class="fas fa-clock"></i> Estimate RUL
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card dashboard-card">
+      <div class="card-body text-center">
+        <h1><i class="fas fa-dollar-sign text-success"></i></h1>
+        <h5 class="card-title">Cost Optimization</h5>
+        <p class="card-text">
+          Optimize maintenance schedules to minimize costs and downtime.
+        </p>
+        <a
+          href="{{ url_for('cost_optimization') }}"
+          class="btn btn-outline-success"
+        >
+          <i class="fas fa-dollar-sign"></i> Optimize Costs
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4>Get Started</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">1. Upload Your Data</h5>
+                <p class="card-text">
+                  Upload your equipment sensor data in CSV format.
+                </p>
+                <a href="{{ url_for('upload_file') }}" class="btn btn-primary">
+                  <i class="fas fa-upload"></i> Upload Data
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">2. Run Analysis</h5>
+                <p class="card-text">
+                  Analyze your data with our machine learning models.
+                </p>
+                <a
+                  href="{{ url_for('failure_prediction') }}"
+                  class="btn btn-primary"
+                >
+                  <i class="fas fa-chart-bar"></i> Run Analysis
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">3. Optimize Maintenance</h5>
+                <p class="card-text">
+                  Generate cost-optimized maintenance schedules.
+                </p>
+                <a
+                  href="{{ url_for('cost_optimization') }}"
+                  class="btn btn-primary"
+                >
+                  <i class="fas fa-cogs"></i> Optimize
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
