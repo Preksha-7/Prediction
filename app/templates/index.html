@@ -1,0 +1,191 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-4">
+  <h1 class="mb-4">
+    <i class="fas fa-tachometer-alt me-2"></i>Predictive Maintenance Dashboard
+  </h1>
+
+  {% if not models_loaded %}
+  <div class="alert alert-warning" role="alert">
+    <i class="fas fa-exclamation-circle me-2"></i>
+    <strong>Warning:</strong> One or more models failed to load. Please ensure
+    model files are available in the correct location.
+  </div>
+  {% endif %}
+
+  <div class="row">
+    <!-- System Overview -->
+    <div class="col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-info-circle me-2"></i>System Overview
+          </h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            This Predictive Maintenance System helps you predict equipment
+            failures, estimate remaining useful life, and optimize maintenance
+            costs.
+          </p>
+          <h6 class="fw-bold">Key Features:</h6>
+          <ul>
+            <li>
+              <strong>Failure Prediction:</strong> Random Forest model to
+              predict equipment failures
+            </li>
+            <li>
+              <strong>RUL Estimation:</strong> Gradient Boosting algorithms to
+              estimate remaining useful life
+            </li>
+            <li>
+              <strong>Cost Optimization:</strong> Linear Programming to optimize
+              maintenance schedules
+            </li>
+          </ul>
+          <p>
+            To get started, upload your maintenance data using the Upload Data
+            button below.
+          </p>
+          <a href="{{ url_for('upload_file') }}" class="btn btn-primary">
+            <i class="fas fa-upload me-2"></i>Upload Data
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Getting Started -->
+    <div class="col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-tasks me-2"></i>Workflow Steps
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <div class="me-3">
+              <div
+                class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white"
+                style="width: 32px; height: 32px"
+              >
+                1
+              </div>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0">Upload Data</h6>
+              <p class="text-muted small mb-0">
+                Upload your CSV file with equipment sensor data
+              </p>
+            </div>
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <div class="me-3">
+              <div
+                class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white"
+                style="width: 32px; height: 32px"
+              >
+                2
+              </div>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0">Preview & Modify Data</h6>
+              <p class="text-muted small mb-0">
+                Review and edit data if needed
+              </p>
+            </div>
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <div class="me-3">
+              <div
+                class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white"
+                style="width: 32px; height: 32px"
+              >
+                3
+              </div>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0">Run Predictions</h6>
+              <p class="text-muted small mb-0">
+                Generate failure predictions and RUL estimates
+              </p>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <div class="me-3">
+              <div
+                class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white"
+                style="width: 32px; height: 32px"
+              >
+                4
+              </div>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0">Optimize Maintenance</h6>
+              <p class="text-muted small mb-0">
+                Generate cost-effective maintenance schedules
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About the Models -->
+    <div class="col-md-12 mb-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-brain me-2"></i>About the Models
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 mb-3 mb-md-0">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Random Forest Model</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">
+                    Failure Prediction
+                  </h6>
+                  <p class="card-text">
+                    Uses historical sensor data to predict equipment failures,
+                    allowing for proactive maintenance scheduling before
+                    breakdowns occur.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Gradient Boosting Model</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">RUL Estimation</h6>
+                  <p class="card-text">
+                    Estimates the remaining useful life of components based on
+                    degradation patterns, helping to plan replacements
+                    efficiently.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">Linear Regression Model</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">
+                    Cost Optimization
+                  </h6>
+                  <p class="card-text">
+                    Optimizes maintenance schedules by balancing repair costs,
+                    downtime penalties, and operational efficiency.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
